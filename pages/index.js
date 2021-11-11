@@ -42,11 +42,13 @@ export default function Home() {
       event.stopPropagation();
     }
     else{
+      console.log("ENTROU AQUI")
         setLoading(true)    
-       axios[method](url,{name,email})
-        .then(()=>setLoading(false))
+       axios[method](url,{codigo,descricao,marca,tamanho,quantidade,custo,venda})
         .then(()=>clear())
+        .catch(()=>console.log("deu ruim"))
     }
+    setLoading(false)
     setValidated(true)   
         }
 
@@ -67,9 +69,13 @@ export default function Home() {
       }
   
       function clear(){
-          setName('')
-          setEmail('')
-          setID('')
+        setCodigo('')
+        setDescricao('')
+        setMarca('')
+        setTamanho('')
+        setQuantidade('')
+        setCusto('')
+        setVenda('')
       }
 
 
@@ -113,7 +119,7 @@ function renderRows(){
                      edit
                       </Button>
 
-                  <Button size="sm" className={styles.button_Remove} variant="danger" onClick={()=>{remove(dados.id)}}>del</Button>
+                  <Button size="sm" className={styles.button_Remove} variant="danger" onClick={()=>{remove(produtos.codigo)}}>del</Button>
                 
               </td>
           
@@ -138,11 +144,46 @@ function renderRows(){
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite um Codigo valido</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridCodigo">
+            <Form.Group as={Col} controlId="formGridDescricao">
             <Form.Label>Descrição</Form.Label>
             <Form.Control type="text" placeholder="Ex:Camisa Branca" value={descricao} onChange={(e)=>setDescricao(e.target.value)} required/>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite uma Descrição </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} controlIds="formGridMarca">
+            <Form.Label>Marca</Form.Label>
+            <Form.Control type="text" placeholder="Ex:Lacoste" value={marca} onChange={(e)=>setMarca(e.target.value)} required/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">Digite a Marca </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} controlIds="formGridTamanho">
+            <Form.Label>Tamanho</Form.Label>
+            <Form.Control type="text" placeholder="Ex:M" value={tamanho} onChange={(e)=>setTamanho(e.target.value)} required/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">Digite o Tamanho </Form.Control.Feedback>
+            </Form.Group>
+            
+            </Row>
+            <Row>
+            <Form.Group as={Col} controlIds="formGridQuantidade">
+            <Form.Label>Quantidade</Form.Label>
+            <Form.Control type="text" placeholder="Ex:M" value={quantidade} onChange={(e)=>setQuantidade(e.target.value)} required/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">Digite a Quantidade</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group as={Col} controlIds="formGridCusto">
+            <Form.Label>Preco de Custo</Form.Label>
+            <Form.Control type="text" placeholder="Ex:25.5" value={custo} onChange={(e)=>setCusto(e.target.value)} required/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">Digite o Preço de Custo</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group as={Col} controlIds="formGridVenda">
+            <Form.Label>Preco de venda</Form.Label>
+            <Form.Control type="text" placeholder="Ex:25.5" value={venda} onChange={(e)=>setVenda(e.target.value)} required/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">Digite o Preço de Venda</Form.Control.Feedback>
             </Form.Group>
             </Row>
             <Button variant="primary"

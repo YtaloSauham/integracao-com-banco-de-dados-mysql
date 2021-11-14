@@ -17,7 +17,7 @@ export default function Home() {
   const [tamanho,setTamanho]=useState('')
   const [quantidade,setQuantidade]=useState('')
   const [custo,setCusto]=useState('')
-  const[venda,setVenda]=useState('')
+  const [venda,setVenda]=useState('')
   const [validated, setValidated] = useState(false);
   const [isLoading,setLoading]=useState(false);
   

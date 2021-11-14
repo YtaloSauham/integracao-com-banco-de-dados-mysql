@@ -5,9 +5,9 @@ const knex = require('knex')({
     connection: {
       host : '127.0.0.1',
       port: process.env.DATABASE_PORT,
-      user : process.env.DATABASE_USER,
-      password :process.env.DATABASE_PASSWORD,
-      database : 'produtos'
+      user : 'root',
+      password :'',
+      database : 'produto'
     }
   });
 

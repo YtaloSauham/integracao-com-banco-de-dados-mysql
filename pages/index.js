@@ -16,8 +16,8 @@ export default function Home() {
   const [marca,setMarca]=useState('')
   const [tamanho,setTamanho]=useState('')
   const [quantidade,setQuantidade]=useState('')
-  const [custo,setCusto]=useState('')
-  const [venda,setVenda]=useState('')
+  const [precocusto,setCusto]=useState('')
+  const [precovenda,setVenda]=useState('')
   const [validated, setValidated] = useState(false);
   const [isLoading,setLoading]=useState(false);
   
@@ -31,23 +31,25 @@ export default function Home() {
     
    },[])
 
-
+  //  function handleChangeValues(values){
+  //    setValues((prevValue)=>({
+  //      ...prevValue,
+  //      [value.target.name]:value.target.value,
+  //    }))
+  //  }
 
    function save(event){
     event.preventDefault();
     const method = codigo ? 'put' : 'post'
     const url= codigo ? `${baseUrl}/${codigo}` : baseUrl
-    const form = event.currentTarget;
-    if (form.checkValidity() === false){
-      event.stopPropagation();
-    }
-    else{
+  
+  
       console.log("ENTROU AQUI")
         setLoading(true)    
-       axios[method](url,{codigo,descricao,marca,tamanho,quantidade,custo,venda})
+       axios[method](url,{descricao,marca,tamanho,quantidade,precocusto,precovenda})
         .then(()=>clear())
         .catch(()=>console.log("deu ruim"))
-    }
+    
     setLoading(false)
     setValidated(true)   
         }
@@ -138,12 +140,12 @@ function renderRows(){
       </Head>
       <Form noValidate validated={validated} onSubmit={save}>
             <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCodigo">
+            {/* <Form.Group as={Col} controlId="formGridCodigo">
             <Form.Label>Codigo</Form.Label>
             <Form.Control type="number" placeholder="Ex:23" value={codigo} onChange={(e)=>setCodigo(e.target.value)} required/>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite um Codigo valido</Form.Control.Feedback>
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group as={Col} controlId="formGridDescricao">
             <Form.Label>Descrição</Form.Label>
             <Form.Control type="text" placeholder="Ex:Camisa Branca" value={descricao} onChange={(e)=>setDescricao(e.target.value)} required/>
@@ -174,21 +176,21 @@ function renderRows(){
 
             <Form.Group as={Col} controlIds="formGridCusto">
             <Form.Label>Preco de Custo</Form.Label>
-            <Form.Control type="text" placeholder="Ex:25.5" value={custo} onChange={(e)=>setCusto(e.target.value)} required/>
+            <Form.Control type="number" placeholder="Ex:25.5" value={precocusto} onChange={(e)=>{setCusto(e.target.value)}} required/>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite o Preço de Custo</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col} controlIds="formGridVenda">
             <Form.Label>Preco de venda</Form.Label>
-            <Form.Control type="text" placeholder="Ex:25.5" value={venda} onChange={(e)=>setVenda(e.target.value)} required/>
+            <Form.Control type="text" placeholder="Ex:25.5" value={precovenda} onChange={(e)=>setVenda(e.target.value)} required/>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite o Preço de Venda</Form.Control.Feedback>
             </Form.Group>
             </Row>
             <Button variant="primary"
-            disabled={isLoading} 
-            type="submit">{isLoading ? 'Salvando…' : 'Salvar'} </Button>
+           
+            type="submit">Salvar</Button>
           <Button  variant="secondary"  active onClick={e=>{clear()}}>Cancelar</Button >
           </Form>
       {renderTable()}

@@ -22,8 +22,7 @@ export default function dbController(req,res){
             existsOrError(product.marca, 'Marca não informada')
             existsOrError(product.tamanho, 'Tamanho não informado')
             existsOrError(product.quantidade, 'Quantidade não informado')
-            existsOrError(product.precocusto, 'Preco de custo não informado')
-            existsOrError(product.precovenda, 'Preco de venda não informado')
+        
             
 
 

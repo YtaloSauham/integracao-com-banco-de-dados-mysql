@@ -26,7 +26,7 @@ export default function Home() {
     setInterval(()=>{axios.get(baseUrl)
       .then((res)=>{setProdutos(res.data)})
       .catch((err)=>{console.log(err)})
-    },5000)
+    },2000)
     
    },[])
 

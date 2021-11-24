@@ -1,4 +1,14 @@
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Interface de Integração com Banco Local MySQL
+O projeto visa fazer uma pequena interface para realizar as operações de CRUD em um banco local.
+
+
+
+## Fotos do Projeto
+![image](https://user-images.githubusercontent.com/85992772/143177328-493f3a28-39d6-4b80-8e62-43d2fd488300.png)
+
 
 ## Getting Started
 

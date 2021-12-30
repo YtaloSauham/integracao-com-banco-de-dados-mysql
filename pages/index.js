@@ -206,8 +206,8 @@ function renderRows(){
         <option value={20}>20</option>
       </select>
       </div>
-      <div>{Array.from(Array(pages), (item, index) => {
-        return <button style={ index === currentPage ? {backgroundColor: "blue",borderRadius:"40"} : null } value={index} onClick={(e) =>{setCurrentPage(Number(e.target.value))}}>{index + 1}</button>
+      <div style={{display:"inline-block"}}>{Array.from(Array(pages), (item, index) => {
+        return <button style={ index === currentPage ? {backgroundColor: "red",padding: "8px 16px",border:"none"} : {backgroundColor: "white",padding: "8px 16px",border:"none"} } value={index} onClick={(e) =>{setCurrentPage(Number(e.target.value))}}>{index + 1}</button>
       })}</div>
       </Layout>
       

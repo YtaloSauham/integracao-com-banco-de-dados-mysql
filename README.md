@@ -7,7 +7,8 @@ O projeto visa fazer uma pequena interface para realizar as operações de CRUD 
 
 
 ## Fotos do Projeto
-![image](https://user-images.githubusercontent.com/85992772/143177328-493f3a28-39d6-4b80-8e62-43d2fd488300.png)
+![image](https://user-images.githubusercontent.com/85992772/147797163-e4af302a-08fe-42e6-9d68-012655570f9b.png)
+
 
 
 ## Getting Started

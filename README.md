@@ -4,6 +4,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Interface de Integração com Banco Local MySQL
 O projeto visa fazer uma pequena interface para realizar as operações de CRUD em um banco local.
 
+## Tecnologias Usadas
+Next
+React
+Knex
+Mysql
+Bootstrap
+
 
 
 ## Fotos do Projeto

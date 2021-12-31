@@ -1,14 +1,18 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Layout from '../components/Layout/Layout'
-import styles from '../styles/Home.module.css'
-import { Table,Button,Form,Row,Col } from 'react-bootstrap'
+import { Button,Form,Row,Col } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
+import styles from '../styles/Home.module.css'
 
 
 
 const baseUrl='http://localhost:3000/api/produtos'
+
+
 export default function Home() {
   const [produtos,setProdutos]=useState([])
   const [codigo,setCodigo]=useState('')
@@ -21,19 +25,69 @@ export default function Home() {
   const [precovenda,setVenda]=useState('')
   const [validated, setValidated] = useState(false)
   const [isLoading,setLoading]=useState(false)
-  const [produtosPerPage,setProdutosPerPage] =useState(10)
-  const [currentPage, setCurrentPage] = useState(0)
 
-  const pages= Math.ceil(produtos.length / produtosPerPage)
-  const startIndex = currentPage* produtosPerPage
-  const endIndex = startIndex + produtosPerPage
-  const currentItens = produtos.slice(startIndex, endIndex)
+
+  const columns = [
+    {
+      name: "Codigo",
+      selector: "codigo",
+      sortable: true
+    },
+    {
+      name: "Descrição",
+      selector: "descricao",
+      sortable: true
+    },
+    {
+      name: "Marca",
+      selector: "marca",
+      sortable: true,
+   
+    },
+    {
+      name: "quantidade",
+      selector: "quantidade",
+      sortable: true
+    },
+    {
+      name: "Preço custo",
+      selector: "precocusto",
+      sortable: true
+    },
+    {
+      name: "Preço venda",
+      selector: "precovenda",
+      sortable: true
+    },
+    {
+    button: true,
+    cell: (produto) => (
+      <div>
+      <Button size="sm" className={styles.button_Edit} variant="warning" onClick={()=>update(produtos)}>
+                           edit
+                            </Button>
+      
+      <Button size="sm" className={styles.button_Remove} variant="danger" onClick={()=>{remove(produtos.codigo)}}>del</Button>
+      </div>
+    )
+    }
+  ];
+
+
+  const data = produtos
+  
+  const tableData = {
+    columns,
+    data
+    
+  };
   
   useEffect(()=>{
     setInterval(()=>{axios.get(baseUrl)
       .then((res)=>{setProdutos(res.data)})
       .catch((err)=>{console.log(err)})
     },2000)
+    console.log(produtos)
     
    },[])
 
@@ -85,54 +139,6 @@ export default function Home() {
 
 
 
-  function renderTable(){
-    return (             
-        <Table striped bordered hover variant="dark">
-            <thead>
-                <tr>
-                    <th>Codigo</th>
-                    <th>Descrição</th>
-                    <th>Marca</th>
-                    <th>Tamanho</th>
-                    <th>Quantidade</th>
-                    <th>Preço custo</th>
-                    <th>Preço venda</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {renderRows()}
-            </tbody>
-        </Table>
-    )
-}
-
-function renderRows(){
-  return currentItens?.map((produtos,i)=>{
-      return  (
-          <tr key={produtos.codigo}> 
-          <td>{produtos.codigo}</td>
-              <td>{produtos.descricao}</td>
-              <td>{produtos.marca}</td>
-              <td>{produtos.tamanho}</td>
-              <td>{produtos.quantidade}</td>
-              <td>{produtos.precocusto}</td>
-              <td>{produtos.precovenda}</td>
-              <td>
-                  
-                  <Button size="sm" className={styles.button_Edit} variant="warning" onClick={()=>{update(produtos)}}>
-                     edit
-                      </Button>
-
-                  <Button size="sm" className={styles.button_Remove} variant="danger" onClick={()=>{remove(produtos.codigo)}}>del</Button>
-                
-              </td>
-          
-          </tr>
-              )
-   })
-}
-
   return (
     <div className={styles.background}>
       <Layout>
@@ -172,7 +178,7 @@ function renderRows(){
             <Row>
             <Form.Group as={Col} controlIds="formGridQuantidade">
             <Form.Label>Quantidade</Form.Label>
-            <Form.Control type="text" placeholder="Ex:M" value={quantidade} onChange={(e)=>setQuantidade(e.target.value)} required/>
+            <Form.Control type="text" placeholder="Ex:2" value={quantidade} onChange={(e)=>setQuantidade(e.target.value)} required/>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">Digite a Quantidade</Form.Control.Feedback>
             </Form.Group>
@@ -197,18 +203,20 @@ function renderRows(){
           <Button  variant="secondary"  active onClick={e=>{clear()}}>Cancelar</Button >
           </Form>
           
-      {renderTable()}
-      <div><span>Produto por pagina</span>
-      <select value={produtosPerPage} onChange={(e) => setProdutosPerPage(Number(e.target.value))}>
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </select>
-      </div>
-      <div style={{display:"inline-block"}}>{Array.from(Array(pages), (item, index) => {
-        return <button style={ index === currentPage ? {backgroundColor: "red",padding: "8px 16px",border:"none"} : {backgroundColor: "white",padding: "8px 16px",border:"none"} } value={index} onClick={(e) =>{setCurrentPage(Number(e.target.value))}}>{index + 1}</button>
-      })}</div>
+          <div className="main">
+      <DataTableExtensions {...tableData}>
+        <DataTable
+          columns={columns}
+          data={data}
+          noHeader
+          defaultSortField="codigo"
+          defaultSortAsc={false}
+          pagination
+          highlightOnHover
+        />
+      </DataTableExtensions>
+    </div>
+     
       </Layout>
       
     
